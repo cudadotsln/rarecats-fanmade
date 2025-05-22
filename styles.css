@@ -1,0 +1,27 @@
+html, body {
+    height: 100%;
+    margin: 0; /* Remove default margin */
+}
+
+body
+{
+    background: url("https://dn721807.ca.archive.org/0/items/windows-xp-desktop-backgrounds/windows-xp-desktop-background-wallpaper-windows-xp-800x600.jpg.png") no-repeat center center;;
+    background-size: 100% 100%;
+}
+
+.helloss
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.aaa
+{
+    position: absolute;
+    top: 27px;
+    left: 3px;
+    height: 450px;
+    width: 631px;
+}

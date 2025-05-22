@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>asa</title>
+    <style>
+        body
+        {
+            background-color: black;
+            margin: 0px;
+            overflow: hidden;
+        }
+
+        .wrapper {
+            position: absolute;
+            width: 110px; /* hitbox size */
+            height: 128px;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        img {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            image-rendering: crisp-edges;
+            pointer-events: none; /* so only wrapper handles click */
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.js" integrity="sha512-7Zgn4mmO9yGGB1j9yP0mZvUPWBVg0fCcUMsYUV6FX7XIKQfb/dhGxsKh794YAzXH2F/+Z3eJL4mrTilrT2ZeFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <div class="wrapper" id="bouncer">
+        <img src="assets/images/cat-001.gif" id="cat">
+    </div>
+
+    <script>
+        var raritySprites = [
+            "assets/images/cat-001.gif",
+            "assets/images/cat-002.gif",
+            "assets/images/cat-003.gif",
+            "assets/images/cat-004.gif",
+            "assets/images/cat-005.gif",
+            "assets/images/cat-006.gif",
+            "assets/images/cat-007.gif",
+            "assets/images/cat-008.gif"
+        ];
+
+        var sprinkle = new Howl({
+            src: ["assets/sounds/sprinkle.webm", "assets/sounds/sprinkle.mp3"],
+            volume: .5
+        });
+
+        var guitar = new Howl({
+            src: ["assets/sounds/guitar.webm", "assets/sounds/guitar.mp3"],
+            volume: .5
+        });
+
+        var heavenly = new Howl({
+            src: ["assets/sounds/heavenly.webm", "assets/sounds/heavenly.mp3"],
+            volume: .5
+        });
+
+        var currentRarity = 1;
+
+        function playSound(sound, rate = 1.0)
+        {
+            soundreal = sound.play();
+            sound.rate(rate, soundreal);
+        }
+
+        const wrapper = document.getElementById("bouncer")
+        const cat = document.getElementById("cat")
+        let x = 100, y = 100
+        let dx = 1, dy = 1
+
+        function bounce() {
+            const w = window.innerWidth - wrapper.offsetWidth
+            const h = window.innerHeight - wrapper.offsetHeight
+
+            x += dx
+            y += dy
+
+            if (x <= -63 || x >= w) dx = -dx
+            if (y <= -65 || y >= h) dy = -dy
+
+            wrapper.style.left = x + "px"
+            wrapper.style.top = y + "px"
+
+            requestAnimationFrame(bounce)
+        }
+
+        wrapper.onclick = () => {
+            const maxX = window.innerWidth - wrapper.offsetWidth
+            const maxY = window.innerHeight - wrapper.offsetHeight
+
+            x = Math.random() * maxX
+            y = Math.random() * maxY
+
+            const dirs = [
+                [1, 1],
+                [-1, 1],
+                [1, -1],
+                [-1, -1],
+            ]
+
+            const [newDx, newDy] = dirs[Math.floor(Math.random() * dirs.length)]
+            dx = newDx
+            dy = newDy
+
+            switch(currentRarity)
+            {
+                case 1:
+                    playSound(sprinkle);
+                    break;
+                case 2:
+                    playSound(sprinkle, 1.05);
+                    break;
+                case 3:
+                    playSound(sprinkle, 1.1);
+                    break;
+                case 4:
+                    playSound(sprinkle, 0.8);
+                    break;
+                case 5:
+                    playSound(guitar, 3);
+                    break;
+                case 6:
+                    playSound(sprinkle, 1.1);
+                    playSound(heavenly, 1.1);
+                    break;
+                case 7:
+                    playSound(sprinkle, 0.5);
+                    playSound(heavenly, 0.9);
+                    break;
+                case 8:
+                    playSound(sprinkle, 0.5);
+                    playSound(heavenly, 0.9);
+                    break;
+            }
+
+            currentRarity = Math.floor(Math.random() * 8) + 1;
+            // FIXED [find some way to fix the url going to cat-000 instead of 1-8]
+            cat.src = raritySprites[currentRarity - 1];
+            console.log(cat.src);
+        }
+
+        bounce()
+    </script>
+</body>
+</html>
