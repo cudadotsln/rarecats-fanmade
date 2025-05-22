@@ -25,6 +25,7 @@
             width: 180px;
             height: 180px;
             image-rendering: crisp-edges;
+            transition: transform 0.3s ease;
             pointer-events: none; /* so only wrapper handles click */
         }
     </style>
@@ -33,37 +34,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.js" integrity="sha512-7Zgn4mmO9yGGB1j9yP0mZvUPWBVg0fCcUMsYUV6FX7XIKQfb/dhGxsKh794YAzXH2F/+Z3eJL4mrTilrT2ZeFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
     <div class="wrapper" id="bouncer">
-        <img src="assets/images/cat-001.gif" id="cat">
+        <img src="../assets/images/cat-001.gif" id="cat">
     </div>
 
     <script>
         var raritySprites = [
-            "assets/images/cat-001.gif",
-            "assets/images/cat-002.gif",
-            "assets/images/cat-003.gif",
-            "assets/images/cat-004.gif",
-            "assets/images/cat-005.gif",
-            "assets/images/cat-006.gif",
-            "assets/images/cat-007.gif",
-            "assets/images/cat-008.gif"
+            "../assets/images/cat-001.gif",
+            "../assets/images/cat-002.gif",
+            "../assets/images/cat-003.gif",
+            "../assets/images/cat-004.gif",
+            "../assets/images/cat-005.gif",
+            "../assets/images/cat-006.gif",
+            "../assets/images/cat-007.gif",
+            "../assets/images/cat-008.gif"
         ];
 
         var sprinkle = new Howl({
-            src: ["assets/sounds/sprinkle.webm", "assets/sounds/sprinkle.mp3"],
+            src: ["../assets/sounds/sprinkle.webm", "../assets/sounds/sprinkle.mp3"],
             volume: .5
         });
 
         var guitar = new Howl({
-            src: ["assets/sounds/guitar.webm", "assets/sounds/guitar.mp3"],
+            src: ["../assets/sounds/guitar.webm", "../assets/sounds/guitar.mp3"],
             volume: .5
         });
 
         var heavenly = new Howl({
-            src: ["assets/sounds/heavenly.webm", "assets/sounds/heavenly.mp3"],
+            src: ["../assets/sounds/heavenly.webm", "../assets/sounds/heavenly.mp3"],
             volume: .5
         });
 
         var currentRarity = 1;
+
+        var bouncing = false;
 
         function playSound(sound, rate = 1.0)
         {
@@ -77,6 +80,8 @@
         let dx = 1, dy = 1
 
         function bounce() {
+            if (!bouncing) return
+
             const w = window.innerWidth - wrapper.offsetWidth
             const h = window.innerHeight - wrapper.offsetHeight
 
@@ -92,7 +97,17 @@
             requestAnimationFrame(bounce)
         }
 
-        wrapper.onclick = () => {
+        wrapper.onclick = async () => {
+            bouncing = false;
+
+            // scale up
+            img.style.transform = "scale(1.5)"
+            await new Promise(r => setTimeout(r, 300))
+
+            // scale back down
+            img.style.transform = "scale(1)"
+            await new Promise(r => setTimeout(r, 300))
+
             const maxX = window.innerWidth - wrapper.offsetWidth
             const maxY = window.innerHeight - wrapper.offsetHeight
 
@@ -145,6 +160,7 @@
             // FIXED [find some way to fix the url going to cat-000 instead of 1-8]
             cat.src = raritySprites[currentRarity - 1];
             console.log(cat.src);
+            bouncing = true;
         }
 
         bounce()
