@@ -1,0 +1,3 @@
+console.log("                               _       \n                              | |      \n  _ __ __ _ _ __ ___  ___ __ _| |_ ___ \n | '__/ _` | '__/ _ \\/ __/ _` | __/ __|\n | | | (_| | | |  __/ (_| (_| | |_\\__ \\\n |_|  \\__,_|_|  \\___|\\___\\__,_|\\__|___/\n                    the fanmade one\n                        with more cats!!");
+console.log("This is fanmade, credits to Deltarune!");
+console.log("If you want to visit the original, go to https://deltarune.com/rarecats")

@@ -66,6 +66,13 @@ function bounce() {
     requestAnimationFrame(bounce)
 }
 
+function weightedRandom(min, max, exponent = 2)
+{
+    const rand = Math.random(); // uniform 0-1
+    const biased = Math.pow(rand, exponent); // bias towards 0
+    return Math.floor(min + (max - min + 1) * biased);
+}  
+
 function addScore(score = 10)
 {
     if (localStorage.getItem("pointscate"))
@@ -144,12 +151,31 @@ wrapper.onclick = async () => {
         */
 
         pastRarity = currentRarity;
-        currentRarity = Math.floor(Math.random() * 101) + 1;
+        //currentRarity = Math.floor(Math.random() * 3001) + 1;
+        currentRarity = weightedRandom(1, 3000, 10);
 
         console.log("Past Rarity: " + pastRarity);
         console.log("Current Rarity: " + currentRarity);
 
-        if (pastRarity >= 100)
+        if (pastRarity >= 3000)
+        {
+            playSound(sprinkle, 0.5);
+            playSound(heavenly, 0.9);
+            addScore(5500);
+        }
+        else if (pastRarity >= 1500)
+        {
+            playSound(sprinkle, 0.5);
+            playSound(heavenly, 0.9);
+            addScore(3000);
+        }
+        else if (pastRarity >= 500)
+        {
+            playSound(sprinkle, 1.1);
+            playSound(heavenly, 1.1);
+            addScore(1000);
+        }
+        else if (pastRarity >= 100)
         {
             playSound(guitar, 0.95);
             addScore(100);
@@ -176,7 +202,19 @@ wrapper.onclick = async () => {
         }
 
         //currentrarity spritetouse starts here
-        if (currentRarity >= 100)
+        if (currentRarity >= 3000)
+        {
+            spriteToUse = raritySprites[7];
+        }
+        else if (currentRarity >= 1500)
+        {
+            spriteToUse = raritySprites[6];
+        }
+        else if (currentRarity >= 500)
+        {
+            spriteToUse = raritySprites[5];
+        }
+        else if (currentRarity >= 100)
         {
             spriteToUse = raritySprites[4];
         }
