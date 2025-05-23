@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="RARE CATS!!!" property="og:title" />
+    <meta content="this is fanmade credits to the delta of the rune" property="og:description" />
+    <meta content="#FF02FF" data-react-helmet="true" name="theme-color" />
     <title>RARE CATS BEST GAME!!</title>
     <link rel="stylesheet" href="https://unpkg.com/xp.css" />
     <link rel="stylesheet" href="styles.css" />
@@ -19,8 +22,15 @@
         </div>
       </div>
       <div class="window-body">
-        <iframe class="aaa" src="rarecats/index.html">
+        <iframe class="aaa" src="rarecats/index.html" sandbox="allow-scripts allow-same-origin">
       </div>
     </div>
+    <script>
+      window.onmessage = function(e) {
+          if (e.data == 'updateTitle') {
+              alert('It works!');
+          }
+      };
+    </script>
 </body>
 </html>

@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FULLSCREEN!</title>
     <style>
+        @font-face {
+            font-family: "8bit";
+            src: url("../assets/fonts/DeterminationSansWebRegular-369X.ttf");
+        }
+
         body
         {
             background-color: black;
             margin: 0px;
             overflow: hidden;
+            color: white;
+            font-family: "8bit" !important;
         }
 
         .wrapper {
@@ -18,6 +25,7 @@
             height: 128px;
             pointer-events: auto;
             cursor: pointer;
+            z-index: 1;
         }
 
         img {
@@ -27,169 +35,32 @@
             image-rendering: crisp-edges;
             transition: transform 0.3s ease, opacity 0.2s ease;
             opacity: 1;
+            z-index: 1;
             pointer-events: none; /* so only wrapper handles click */
+        }
+        
+        #gai
+        {
+            margin: 5px 10px;
+            position: fixed;
+            z-index: 9999;
+            pointer-events: none;
+            font-size: large;
+            letter-spacing: 2px;
+            opacity: 50%;
         }
     </style>
 </head>
 <body>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.js" integrity="sha512-7Zgn4mmO9yGGB1j9yP0mZvUPWBVg0fCcUMsYUV6FX7XIKQfb/dhGxsKh794YAzXH2F/+Z3eJL4mrTilrT2ZeFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    
+
     <div class="wrapper" id="bouncer">
         <img src="../assets/images/cat-001.gif" id="cat">
     </div>
 
-    <script>
-        var raritySprites = [
-            "../assets/images/cat-001.gif",
-            "../assets/images/cat-002.gif",
-            "../assets/images/cat-003.gif",
-            "../assets/images/cat-004.gif",
-            "../assets/images/cat-005.gif",
-            "../assets/images/cat-006.gif",
-            "../assets/images/cat-007.gif",
-            "../assets/images/cat-008.gif"
-        ];
+    <p id="gai">(0 Points)</p>
 
-        var sprinkle = new Howl({
-            src: ["../assets/sounds/sprinkle.webm", "../assets/sounds/sprinkle.mp3"],
-            volume: .5
-        });
-
-        var guitar = new Howl({
-            src: ["../assets/sounds/guitar.webm", "../assets/sounds/guitar.mp3"],
-            volume: .5
-        });
-
-        var heavenly = new Howl({
-            src: ["../assets/sounds/heavenly.webm", "../assets/sounds/heavenly.mp3"],
-            volume: .5
-        });
-
-        var currentRarity = 1;
-
-        var bouncing = true;
-        var canClick = true;
-
-        function playSound(sound, rate = 1.0)
-        {
-            soundreal = sound.play();
-            sound.rate(rate, soundreal);
-        }
-
-        const wrapper = document.getElementById("bouncer")
-        const cat = document.getElementById("cat")
-        let x = 100, y = 100
-        let dx = 1, dy = 1
-
-        function bounce() {
-            if (bouncing == true)
-            {
-                const w = window.innerWidth - wrapper.offsetWidth
-                const h = window.innerHeight - wrapper.offsetHeight
-
-                x += dx
-                y += dy
-
-                if (x <= -63 || x >= w) dx = -dx
-                if (y <= -65 || y >= h) dy = -dy
-
-                wrapper.style.left = x + "px"
-                wrapper.style.top = y + "px"
-            }
-            requestAnimationFrame(bounce)
-        }
-
-        wrapper.onclick = async () => {
-            if (canClick)
-            {
-                /*
-                if (parseInt(localStorage.getItem("pointscate")) + 1 == NaN)
-                {
-                    localStorage.setItem("pointscate", 1);
-                }
-                else
-                {
-                    localStorage.setItem("pointscate", parseInt(localStorage.getItem("pointscate")) + 1);
-                }
-                document.title = localStorage.getItem("pointscate") + " points"
-                */
-                canClick = false;
-                bouncing = false;
-
-                const maxX = window.innerWidth - wrapper.offsetWidth
-                const maxY = window.innerHeight - wrapper.offsetHeight
-
-                x = Math.random() * maxX
-                y = Math.random() * maxY
-
-                const dirs = [
-                    [1, 1],
-                    [-1, 1],
-                    [1, -1],
-                    [-1, -1],
-                ]
-
-                const [newDx, newDy] = dirs[Math.floor(Math.random() * dirs.length)]
-                dx = newDx
-                dy = newDy
-
-                switch(currentRarity)
-                {
-                    case 1:
-                        playSound(sprinkle);
-                        break;
-                    case 2:
-                        playSound(sprinkle, 1.05);
-                        break;
-                    case 3:
-                        playSound(sprinkle, 1.1);
-                        break;
-                    case 4:
-                        playSound(sprinkle, 0.8);
-                        break;
-                    case 5:
-                        playSound(guitar, 0.95);
-                        break;
-                    case 6:
-                        playSound(sprinkle, 1.1);
-                        playSound(heavenly, 1.1);
-                        break;
-                    case 7:
-                        playSound(sprinkle, 0.5);
-                        playSound(heavenly, 0.9);
-                        break;
-                    case 8:
-                        playSound(sprinkle, 0.5);
-                        playSound(heavenly, 0.9);
-                        break;
-                }
-
-                currentRarity = Math.floor(Math.random() * 8) + 1;
-
-                // scale up
-                cat.style.transform = "scale(1.5)"
-                await new Promise(r => setTimeout(r, 300))
-
-                // scale back down
-                cat.style.transform = "scale(1)"
-                await new Promise(r => setTimeout(r, 300))
-
-                // fade out
-                cat.style.opacity = 0
-                await new Promise(r => setTimeout(r, 200))
-
-                // fade out
-                cat.style.opacity = 1
-
-                bouncing = true;
-                canClick = true;
-                // FIXED [find some way to fix the url going to cat-000 instead of 1-8]
-                cat.src = raritySprites[currentRarity - 1];
-                console.log(cat.src);
-            }
-        }
-
-        bounce()
-    </script>
+    <script src="scripts.js"></script>
 </body>
 </html>
