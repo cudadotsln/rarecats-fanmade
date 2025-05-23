@@ -27,19 +27,7 @@ var heavenly = new Howl({
 });
 
 var currentRarity = 1;
-
-var rarities =
-[
-    {
-        type: "normal",
-        chance: 0
-    },
-    {
-        type: "blueora",
-        chance: 10
-    },
-    
-]
+var pastRarity = 1;
 
 var bouncing = true;
 var canClick = true;
@@ -155,63 +143,59 @@ wrapper.onclick = async () => {
         }
         */
 
-        if (currentRarity >= 0)
+        pastRarity = currentRarity;
+        currentRarity = Math.floor(Math.random() * 101) + 1;
+
+        console.log("Past Rarity: " + pastRarity);
+        console.log("Current Rarity: " + currentRarity);
+
+        if (pastRarity >= 100)
         {
-            //playSound(sprinkle);
-            //addScore();
-            spriteToUse = raritySprites[0];
+            playSound(guitar, 0.95);
+            addScore(100);
         }
-        if (currentRarity >= 15)
+        else if (pastRarity >= 50)
         {
-            //playSound(sprinkle, 1.05);
-            //addScore(15);
-            spriteToUse = raritySprites[1];
+            playSound(sprinkle, 0.8);
+            addScore(50);
         }
-        if (currentRarity >= 20)
+        else if (pastRarity >= 40)
         {
-            //playSound(sprinkle, 1.1);
-            //addScore(20);
-            spriteToUse = raritySprites[2];
+            playSound(sprinkle, 1.1);
+            addScore(40);
         }
-        if (currentRarity >= 25)
+        else if (pastRarity >= 20)
         {
-            //playSound(sprinkle, 0.8);
-            //addScore(25);
-            spriteToUse = raritySprites[3];
+            playSound(sprinkle, 1.05);
+            addScore(20);
         }
+        else if (pastRarity >= 0)
+        {
+            playSound(sprinkle);
+            addScore();
+        }
+
+        //currentrarity spritetouse shit starts here
         if (currentRarity >= 50)
         {
-            //playSound(guitar, 0.95);
-            //addScore(50);
             spriteToUse = raritySprites[4];
         }
-
-        //to fix: TypeError: spriteToUse is not a function
-        switch (raritySprites.findIndex(spriteToUse))
+        else if (currentRarity >= 25)
         {
-            case 0:
-                playSound(sprinkle);
-                addScore();
-                break;
-            case 1:
-                playSound(sprinkle, 1.05);
-                addScore(15);
-                break;
-            case 2:
-                playSound(sprinkle, 1.1);
-                addScore(20);
-                break;
-            case 3:
-                playSound(sprinkle, 0.8);
-                addScore(25);
-                break;
-            case 4:
-                playSound(guitar, 0.95);
-                addScore(50);
-                break; 
+            spriteToUse = raritySprites[3];
         }
-
-        currentRarity = Math.floor(Math.random() * 8000) + 1;
+        else if (currentRarity >= 20)
+        {
+            spriteToUse = raritySprites[2];
+        }
+        else if (currentRarity >= 15)
+        {
+            spriteToUse = raritySprites[1];
+        }
+        else if (currentRarity >= 0)
+        {
+            spriteToUse = raritySprites[0];
+        }
 
         // scale up
         cat.style.transform = "scale(1.5)"
@@ -232,7 +216,7 @@ wrapper.onclick = async () => {
         canClick = true;
         // FIXED [find some way to fix the url going to cat-000 instead of 1-8]
         cat.src = spriteToUse;
-        console.log(cat.src);
+        //console.log(cat.src);
     }
 }
 

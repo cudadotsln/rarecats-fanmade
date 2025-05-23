@@ -17,20 +17,14 @@
           rare cats v1.0
         </div>
         <div class="title-bar-controls">
-            <button aria-label="Maximize" onclick="window.location.href = 'rarecats/'"></button>
             <button aria-label="Help"></button>
+            <button aria-label="Maximize" onclick="window.location.href = 'rarecats/index.html'"></button>
+            <button aria-label="Close" onclick="localStorage.clear(); location.reload();"></button>
         </div>
       </div>
       <div class="window-body">
         <iframe class="aaa" src="rarecats/index.html" sandbox="allow-scripts allow-same-origin">
       </div>
     </div>
-    <script>
-      window.onmessage = function(e) {
-          if (e.data == 'updateTitle') {
-              alert('It works!');
-          }
-      };
-    </script>
 </body>
 </html>
