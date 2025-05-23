@@ -175,7 +175,7 @@ wrapper.onclick = async () => {
             addScore();
         }
 
-        //currentrarity spritetouse shit starts here
+        //currentrarity spritetouse starts here
         if (currentRarity >= 100)
         {
             spriteToUse = raritySprites[4];
@@ -216,7 +216,7 @@ wrapper.onclick = async () => {
         canClick = true;
         // FIXED [find some way to fix the url going to cat-000 instead of 1-8]
         cat.src = spriteToUse;
-        //console.log(cat.src);
+        console.log(cat.src);
     }
 }
 
