@@ -176,19 +176,19 @@ wrapper.onclick = async () => {
         }
 
         //currentrarity spritetouse shit starts here
-        if (currentRarity >= 50)
+        if (currentRarity >= 100)
         {
             spriteToUse = raritySprites[4];
         }
-        else if (currentRarity >= 25)
+        else if (currentRarity >= 50)
         {
             spriteToUse = raritySprites[3];
         }
-        else if (currentRarity >= 20)
+        else if (currentRarity >= 40)
         {
             spriteToUse = raritySprites[2];
         }
-        else if (currentRarity >= 15)
+        else if (currentRarity >= 20)
         {
             spriteToUse = raritySprites[1];
         }
