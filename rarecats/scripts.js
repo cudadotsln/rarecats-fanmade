@@ -152,7 +152,7 @@ wrapper.onclick = async () => {
 
         pastRarity = currentRarity;
         //currentRarity = Math.floor(Math.random() * 3001) + 1;
-        currentRarity = weightedRandom(1, 3000, 10);
+        currentRarity = weightedRandom(1, 4000, 10);
 
         console.log("Past Rarity: " + pastRarity);
         console.log("Current Rarity: " + currentRarity);
