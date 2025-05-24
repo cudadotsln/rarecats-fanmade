@@ -6,7 +6,8 @@ var raritySprites = [
     "../assets/images/cat-005.gif",
     "../assets/images/cat-006.gif",
     "../assets/images/cat-007.gif",
-    "../assets/images/cat-008.gif"
+    "../assets/images/cat-008.gif",
+    "../assets/images/cat-009.gif"
 ];
 
 var spriteToUse = raritySprites[0];
@@ -26,13 +27,18 @@ var heavenly = new Howl({
     volume: .5
 });
 
+var idiot = new Howl({
+    src: ["../assets/sounds/idiot.webm", "../assets/sounds/idiot.mp3"],
+    volume: .5
+});
+
 var currentRarity = 1;
 var pastRarity = 1;
 
 var bouncing = true;
 var canClick = true;
 
-var debug = false;
+var debug = true;
 
 function playSound(sound, rate = 1.0)
 {
@@ -154,7 +160,7 @@ wrapper.onclick = async () => {
 
         pastRarity = currentRarity;
         //currentRarity = Math.floor(Math.random() * 3001) + 1;
-        currentRarity = weightedRandom(1, 4000, 15);
+        currentRarity = weightedRandom(1, 8000, 10);
 
         if (debug)
         {
@@ -162,43 +168,48 @@ wrapper.onclick = async () => {
             console.log("Current Rarity: " + currentRarity);
         }
 
-        if (pastRarity >= 3000)
+        if (pastRarity >= 7000)
         {
-            playSound(sprinkle, 0.5);
-            playSound(heavenly, 0.9);
+            playSound(idiot);
             addScore(5500);
         }
-        else if (pastRarity >= 1500)
+        else if (pastRarity >= 3000)
         {
             playSound(sprinkle, 0.5);
             playSound(heavenly, 0.9);
             addScore(3000);
         }
+        else if (pastRarity >= 1500)
+        {
+            playSound(sprinkle, 0.5);
+            playSound(heavenly, 0.9);
+            addScore(1000);
+        }
         else if (pastRarity >= 500)
         {
             playSound(sprinkle, 1.1);
             playSound(heavenly, 1.1);
-            addScore(1000);
+            addScore(100);
         }
         else if (pastRarity >= 100)
         {
             playSound(guitar, 0.95);
-            addScore(100);
+            addScore(50);
         }
         else if (pastRarity >= 50)
         {
             playSound(sprinkle, 0.8);
-            addScore(50);
+            addScore(40);
         }
         else if (pastRarity >= 40)
         {
             playSound(sprinkle, 1.1);
-            addScore(40);
+            addScore(20);
         }
         else if (pastRarity >= 20)
         {
             playSound(sprinkle, 1.05);
-            addScore(20);
+            addScore(15);
         }
         else if (pastRarity >= 0)
         {
@@ -207,7 +218,11 @@ wrapper.onclick = async () => {
         }
 
         //currentrarity spritetouse starts here
-        if (currentRarity >= 3000)
+        if (currentRarity >= 7000)
+        {
+            spriteToUse = raritySprites[8];
+        }
+        else if (currentRarity >= 3000)
         {
             spriteToUse = raritySprites[7];
         }
@@ -259,7 +274,6 @@ wrapper.onclick = async () => {
         canClick = true;
         // FIXED [find some way to fix the url going to cat-000 instead of 1-8]
         cat.src = spriteToUse;
-        console.log(cat.src);
         if (debug)
         {
             console.log(cat.src);
