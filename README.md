@@ -1,6 +1,8 @@
 <h1 align="center">RARE CATS</h1>
 <p align="center">the fanmade one</p>
-<img src="assets/images/cat-001.gif" style="image-rendering: crisp-edges;" align="center"></img>
+<center>
+    <img src="assets/images/cat-001.gif" style="image-rendering: crisp-edges;"></img>
+</center>
 
 ---
 
