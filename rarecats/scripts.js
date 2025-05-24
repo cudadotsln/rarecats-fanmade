@@ -38,7 +38,7 @@ var pastRarity = 1;
 var bouncing = true;
 var canClick = true;
 
-var debug = true;
+var debug = false;
 
 function playSound(sound, rate = 1.0)
 {
