@@ -8,7 +8,7 @@
 
 <p align="center">this is a fanmade version of https://deltarune.com/rarecats</p>
 <p align="center">and its a sigma version too</p>
-<p align="center"><em>"its released!"</em></p>
+<p align="center"><em>"new cats frequently!"</em></p>
 
 ---
 
