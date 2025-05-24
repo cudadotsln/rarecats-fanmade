@@ -32,6 +32,8 @@ var pastRarity = 1;
 var bouncing = true;
 var canClick = true;
 
+var debug = false;
+
 function playSound(sound, rate = 1.0)
 {
     soundreal = sound.play();
@@ -152,10 +154,13 @@ wrapper.onclick = async () => {
 
         pastRarity = currentRarity;
         //currentRarity = Math.floor(Math.random() * 3001) + 1;
-        currentRarity = weightedRandom(1, 4000, 10);
+        currentRarity = weightedRandom(1, 4000, 15);
 
-        console.log("Past Rarity: " + pastRarity);
-        console.log("Current Rarity: " + currentRarity);
+        if (debug)
+        {
+            console.log("Past Rarity: " + pastRarity);
+            console.log("Current Rarity: " + currentRarity);
+        }
 
         if (pastRarity >= 3000)
         {
@@ -255,6 +260,10 @@ wrapper.onclick = async () => {
         // FIXED [find some way to fix the url going to cat-000 instead of 1-8]
         cat.src = spriteToUse;
         console.log(cat.src);
+        if (debug)
+        {
+            console.log(cat.src);
+        }
     }
 }
 
