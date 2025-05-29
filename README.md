@@ -14,6 +14,11 @@
 
 <h1 align="center">- changelog -</h1>
 <p align="center">
+    <h2 align="center">5/28/2025 - v1.2 - pinball/metallic cat</h1>
+    <p align="center">new cat!! adds metallic cat, a reference to space cadet pinball</p>
+</p>
+
+<p align="center">
     <h2 align="center">5/24/2025 - v1.1 - first update!</h1>
     <p align="center">new cats, that means rarities for every cat decreases so that every cat with a higher chance isnt impossible to get</p>
 </p>
