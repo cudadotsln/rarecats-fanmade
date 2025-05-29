@@ -7,7 +7,8 @@ var raritySprites = [
     "../assets/images/cat-006.gif",
     "../assets/images/cat-007.gif",
     "../assets/images/cat-008.gif",
-    "../assets/images/cat-009.gif"
+    "../assets/images/cat-009.gif",
+    "../assets/images/cat-010.gif"
 ];
 
 var spriteToUse = raritySprites[0];
@@ -32,6 +33,21 @@ var idiot = new Howl({
     volume: .5
 });
 
+var pinballlaunch = new Howl({
+    src: ["../assets/sounds/pinball1.webm", "../assets/sounds/pinball1.mp3"],
+    volume: .5
+});
+
+var pinballbounce = new Howl({
+    src: ["../assets/sounds/pinballbounce.webm", "../assets/sounds/pinballbounce.mp3"],
+    volume: .5
+});
+
+var pinballclick = new Howl({
+    src: ["../assets/sounds/pinballclick.webm", "../assets/sounds/pinballclick.mp3"],
+    volume: .5
+});
+
 var currentRarity = 1;
 var pastRarity = 1;
 
@@ -39,6 +55,8 @@ var bouncing = true;
 var canClick = true;
 
 var debug = false;
+
+var isMetallic = false;
 
 function playSound(sound, rate = 1.0)
 {
@@ -67,6 +85,20 @@ function bounce() {
 
         if (x <= -63 || x >= w) dx = -dx
         if (y <= -65 || y >= h) dy = -dy
+        if (x <= -63 || x >= w)
+        {
+            if (isMetallic)
+            {
+                playSound(pinballbounce);
+            }
+        }
+        if (y <= -65 || y >= h)
+        {
+            if (isMetallic)
+            {
+                playSound(pinballbounce);
+            }
+        }
 
         wrapper.style.left = x + "px"
         wrapper.style.top = y + "px"
@@ -97,6 +129,10 @@ function addScore(score = 10)
 wrapper.onclick = async () => {
     if (canClick)
     {
+        if (isMetallic = true)
+        {
+            isMetallic = false;
+        }
         canClick = false;
         bouncing = false;
 
@@ -160,7 +196,7 @@ wrapper.onclick = async () => {
 
         pastRarity = currentRarity;
         //currentRarity = Math.floor(Math.random() * 3001) + 1;
-        currentRarity = weightedRandom(1, 8000, 10);
+        currentRarity = weightedRandom(1, 12000, 10);
 
         if (debug)
         {
@@ -168,24 +204,30 @@ wrapper.onclick = async () => {
             console.log("Current Rarity: " + currentRarity);
         }
 
-        if (pastRarity >= 7000)
+
+        if (pastRarity >= 11000)
+        {
+            playSound(pinballclick);
+            addScore(10000);
+        }
+        else if (pastRarity >= 7000)
         {
             playSound(idiot);
             addScore(5500);
         }
-        else if (pastRarity >= 3000)
+        else if (pastRarity >= 5000)
         {
             playSound(sprinkle, 0.5);
             playSound(heavenly, 0.9);
             addScore(3000);
         }
-        else if (pastRarity >= 1500)
+        else if (pastRarity >= 3000)
         {
             playSound(sprinkle, 0.5);
             playSound(heavenly, 0.9);
             addScore(1000);
         }
-        else if (pastRarity >= 500)
+        else if (pastRarity >= 1000)
         {
             playSound(sprinkle, 1.1);
             playSound(heavenly, 1.1);
@@ -218,19 +260,23 @@ wrapper.onclick = async () => {
         }
 
         //currentrarity spritetouse starts here
-        if (currentRarity >= 7000)
+        if (currentRarity >= 11000)
+        {
+            spriteToUse = raritySprites[9];
+        }
+        else if (currentRarity >= 7000)
         {
             spriteToUse = raritySprites[8];
         }
-        else if (currentRarity >= 3000)
+        else if (currentRarity >= 5000)
         {
             spriteToUse = raritySprites[7];
         }
-        else if (currentRarity >= 1500)
+        else if (currentRarity >= 3000)
         {
             spriteToUse = raritySprites[6];
         }
-        else if (currentRarity >= 500)
+        else if (currentRarity >= 1000)
         {
             spriteToUse = raritySprites[5];
         }
@@ -274,6 +320,11 @@ wrapper.onclick = async () => {
         canClick = true;
         // FIXED [find some way to fix the url going to cat-000 instead of 1-8]
         cat.src = spriteToUse;
+        if (spriteToUse == raritySprites[9])
+        {
+            playSound(pinballlaunch);
+            isMetallic = true;
+        }
         if (debug)
         {
             console.log(cat.src);
